@@ -118,3 +118,10 @@ Mostrando os valores no html
 
 
 
+/*
+Biblioteca body-parser
+
+Permite converter os dados vindos do corpo da requisição em json
+ 
+
+*/
