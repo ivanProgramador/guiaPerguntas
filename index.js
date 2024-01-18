@@ -1,6 +1,19 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const connection = require('./database/database');
+const Pergunta = require('./database/Pergunta');
+
+
+//testando a conexão 
+
+connection.authenticate().then(()=>{
+    console.log('Conexão bem sucedida')
+}).catch((erro)=>{
+    console.log(erro)
+})
+
+
 
 // avisando que eu vou usar o EJS como view engine 
 app.set('view engine','ejs');
@@ -46,4 +59,4 @@ app.post('/salvarpergunta',(req,res)=>{
 
 
 
-app.listen(8080,()=>{console.log("App rodando  na porta:8080");});
+app.listen(7070,()=>{console.log("App rodando  na porta:7070")});
