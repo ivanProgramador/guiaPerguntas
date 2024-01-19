@@ -29,8 +29,20 @@ app.use(bodyParser.json());
 
 
 app.get('/',(req,res)=>{
-    res.render('index');
+
+    //usando o modelo pergunta para lista as perguntas salvas 
+    Pergunta.findAll({raw:true}).then(perguntas=>{
+        res.render('index',{perguntas:perguntas});
+        });
+
+
+
+    
 });
+
+
+
+
 
 app.get('/perguntar',(req,res)=>{
 
@@ -53,7 +65,14 @@ app.post('/salvarpergunta',(req,res)=>{
     var titulo = req.body.titulo;
     var descricao = req.body.descricao;
 
-    res.send('Formulario recebido: titulo = '+titulo+"  descricao = " + descricao )
+    Pergunta.create({
+        titulo: titulo,
+        descricao: descricao
+    }).then(()=>{
+        res.redirect('/');
+    })
+
+    
 
 });
 

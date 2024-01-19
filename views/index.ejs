@@ -3,7 +3,17 @@
 <body>
     <%- include('partials/navbar'); -%>
 
-    <h1>teste</h1>
+    <div class="container">
+
+        <% perguntas.forEach(pergunta =>{  %> 
+            <p><%= pergunta.titulo %></p>    
+          <% }) %>
+
+    </div>
+
+  
+
+  
 
 </body>
 
