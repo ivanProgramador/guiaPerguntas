@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const connection = require('./database/database');
 const Pergunta = require('./database/Pergunta');
+const Resposta = require('./database/Resposta');
 
 
 //testando a conexão 
@@ -106,10 +107,20 @@ app.get("/pergunta/:id",(req,res)=>{
 
         if(pergunta != undefined){
 
-            //se tiver ele vai pra view com a apergunta selecionada 
-            res.render('pergunta',{pergunta:pergunta})
-            
-            
+            //buscando todas as respostas referentes a essa pergunta
+            // a comparação vai ser feita pelo id 
+            Resposta.findAll({
+                where:{perguntaId:pergunta.id},
+                order:[['id','DESC']]
+            }).then(respostas =>{
+                  //se tiver ele vai pra view com a apergunta selecionada 
+                  //e as respostass refrentes a ela 
+                res.render('pergunta',{
+                    pergunta:pergunta,
+                    respostas:respostas
+                })
+               
+            })      
 
         }else{
             //se não tiver ele bolta pra pagina inicial 
@@ -120,6 +131,27 @@ app.get("/pergunta/:id",(req,res)=>{
     }
 
     )
+
+})
+
+
+app.post('/responder',(req,res)=>{
+
+    //corpo de resposta 
+    var corpo = req.body.corpo;
+
+    //id da pergunta 
+    var perguntaId = req.body.pergunta;
+
+    Resposta.create({
+        corpo:corpo,
+        perguntaId: perguntaId
+    }).then(()=>{
+        res.redirect('/pergunta/'+perguntaId);
+    })
+
+
+
 
 })
 

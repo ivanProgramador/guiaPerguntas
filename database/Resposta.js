@@ -3,7 +3,7 @@ const connection = require("./database");
 
 const Resposta = connection.define("resposta",{
     corpo:{
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull:false
     },
     perguntaId:{
